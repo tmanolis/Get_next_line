@@ -6,7 +6,7 @@
 /*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 11:17:55 by tmanolis          #+#    #+#             */
-/*   Updated: 2021/06/07 19:55:46 by tmanolis         ###   ########.fr       */
+/*   Updated: 2021/06/08 13:55:57 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "get_next_line.h"
+
+size_t  ft_strlen(const char *str);
+size_t  ft_strlcpy(char *dst, const char *src, size_t dstsize);
+char    *ft_strdup(const char *s1);
 
 int get_next_line(int fd, char **line)
 {
@@ -24,9 +28,8 @@ int get_next_line(int fd, char **line)
     while (ret > 0)
     {
         buf[ret] = '\0';
-        *line = strdup(buf);
+        *line = ft_strdup(buf);
         ret = read(fd, buf, BUFFER_SIZE);
-		ret = 0;
     }
 	return (1);
 }

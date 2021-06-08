@@ -6,12 +6,12 @@
 /*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 11:19:11 by tmanolis          #+#    #+#             */
-/*   Updated: 2021/06/07 19:54:06 by tmanolis         ###   ########.fr       */
+/*   Updated: 2021/06/08 12:56:05 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __LIBFT_H__
-#define __LIBFT_H__
+#ifndef __GET_NEXT_LINE_H__
+#define __GET_NEXT_LINE_H__
 
 #include <sys/types.h>
 #include <sys/uio.h>
