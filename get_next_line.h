@@ -19,7 +19,7 @@
 #include <fcntl.h>
 
 #ifndef BUFFER_SIZE
-#define BUFFER_SIZE 20
+#define BUFFER_SIZE 1
 #endif
 
 int get_next_line(int fd, char **line);

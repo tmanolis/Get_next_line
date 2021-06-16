@@ -108,15 +108,15 @@ int get_next_line(int fd, char **line)
 	}
 	printf("ret : %zu\n", ret);
 	i = 0;
-	if (ret != 0)
-	{		
-		while (stock[i] != '\n') // 2nd condition to deal with the last line
-		i++;
+	if (ret == 0 && ft_strchr(stock, '\n') == 0) // 2nd condition to deal with the last line
+	{	
+		i = ft_strlen(stock);
+		printf("i : %zu\n", i);	
 	}
 	else 
 	{
-		i = ft_strlen(stock);
-		printf("i : %zu\n", i);
+		while (stock[i] != '\n')
+			i++;
 	}
 	*line = copy_until_EOF(*line, stock, i);
 	
@@ -161,10 +161,13 @@ int main(void)
 	free(line);
 	get_next_line(fd, &line);
 	printf("|%s|\n", line);
+	free(line);
 	get_next_line(fd, &line);
 	printf("|%s|\n", line);
+	free(line);
 	get_next_line(fd, &line);
 	printf("|%s|\n", line);
+	free(line);
 	close (fd);
 	return (0);
 }
