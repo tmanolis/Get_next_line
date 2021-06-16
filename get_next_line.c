@@ -145,5 +145,3 @@ int main(void)
 	close (fd);
 	return (0);
 }
-
-// à la fin du read 
