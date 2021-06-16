@@ -37,14 +37,17 @@ char	*initialize_stock(char *stock)
 	return (stock);
 }
 
-char	*copy_until_EOF(char *line, char *stock, int i)
+char	*copy_until_EOF(char *line, char *stock, size_t i)
 {
+	size_t	len;
+
 	ft_putstr("je suis dans le copy_until_EOF\n");
 	line = (char *)malloc(sizeof(char) * (i + 1));
 		if (!line)
 			return (NULL);
 	i = 0;
-	while (stock[i] != '\n')
+	len = ft_strlen(stock); // to handle the last line of the file
+	while (stock[i] != '\n' && i < len)
 	{
 		line[i] = stock[i];
 		i++;
@@ -83,21 +86,38 @@ int get_next_line(int fd, char **line)
 	static char	*stock;
 
 	ret = read(fd, buf, BUFFER_SIZE);
+	buf[ret] = '\0';
 	ft_putstr("read ok\n");
 	if (stock == NULL)
 		stock = initialize_stock(stock);
 	while (ret > 0 && ft_strchr(stock, '\n') == 0)
 	{
 		ft_putstr("je suis dans le if de strchr\n");
+		ft_putstr("buf : ");
+		ft_putstr(buf);
+		ft_putstr("\n");
 		stock = ft_strjoin(stock, buf);
-		ft_putstr("stock apres strjoin :");
+		ft_putstr("stock apres strjoin : ");
 		ft_putstr(stock);			
 		ft_putstr("\n");
-		ret = read(fd, buf, BUFFER_SIZE);
+		if (ret != 0)
+		{
+			ret = read(fd, buf, BUFFER_SIZE);
+			buf[ret] = '\0';
+		}
 	}
-	i = 0;		
-	while (stock[i] != '\n')
+	printf("ret : %zu\n", ret);
+	i = 0;
+	if (ret != 0)
+	{		
+		while (stock[i] != '\n') // 2nd condition to deal with the last line
 		i++;
+	}
+	else 
+	{
+		i = ft_strlen(stock);
+		printf("i : %zu\n", i);
+	}
 	*line = copy_until_EOF(*line, stock, i);
 	
 	ft_putstr("line : ");
@@ -148,3 +168,5 @@ int main(void)
 	close (fd);
 	return (0);
 }
+
+// à la fin du read 
