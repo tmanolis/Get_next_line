@@ -19,8 +19,6 @@ size_t  ft_strlen(const char *str);
 char	*ft_strchr(const char *s, int c);
 char 	*ft_strjoin(char const *s1, char const *s2);
 
-void ft_putstr(char *s);
-
 char	*initialize_stock(char *stock)
 {
 	int i;
@@ -40,8 +38,7 @@ char	*initialize_stock(char *stock)
 char	*copy_until_EOF(char *line, char *stock, size_t i)
 {
 	size_t	len;
-
-	ft_putstr("je suis dans le copy_until_EOF\n");
+	
 	line = (char *)malloc(sizeof(char) * (i + 1));
 		if (!line)
 			return (NULL);
@@ -77,6 +74,21 @@ char	*copy_rest(char	*stock, size_t i)
 	return (tmp);
 }
 
+size_t	len_of_line(size_t ret, char *stock)
+{
+	size_t i;
+
+	i = 0;
+	if (ret == 0 && ft_strchr(stock, '\n') == 0) // 2nd condition to deal with the last line
+		i = ft_strlen(stock);
+	else 
+	{
+		while (stock[i] != '\n')
+			i++;
+	}
+	return (i);
+}
+
 int get_next_line(int fd, char **line)
 {
 	size_t		i;
@@ -87,65 +99,27 @@ int get_next_line(int fd, char **line)
 
 	ret = read(fd, buf, BUFFER_SIZE);
 	buf[ret] = '\0';
-	ft_putstr("read ok\n");
 	if (stock == NULL)
 		stock = initialize_stock(stock);
 	while (ret > 0 && ft_strchr(stock, '\n') == 0)
 	{
-		ft_putstr("je suis dans le if de strchr\n");
-		ft_putstr("buf : ");
-		ft_putstr(buf);
-		ft_putstr("\n");
 		stock = ft_strjoin(stock, buf);
-		ft_putstr("stock apres strjoin : ");
-		ft_putstr(stock);			
-		ft_putstr("\n");
 		if (ret != 0)
 		{
 			ret = read(fd, buf, BUFFER_SIZE);
 			buf[ret] = '\0';
 		}
 	}
-	printf("ret : %zu\n", ret);
-	i = 0;
-	if (ret == 0 && ft_strchr(stock, '\n') == 0) // 2nd condition to deal with the last line
-	{	
-		i = ft_strlen(stock);
-		printf("i : %zu\n", i);	
-	}
-	else 
-	{
-		while (stock[i] != '\n')
-			i++;
-	}
+	i = len_of_line(ret, stock);
 	*line = copy_until_EOF(*line, stock, i);
-	
-	ft_putstr("line : ");
-	ft_putstr(*line);		
-	ft_putstr("\n");
-	ft_putstr("stock apres copier dans line : ");
-	ft_putstr(stock);			
-	ft_putstr("\n");
-	printf("i : %zu\n", i);
-	printf("strlen(stock) : %zu\n", ft_strlen(stock));
-	
 	tmp = NULL;
 	if (i < ft_strlen(stock))
 	{
 		tmp = copy_rest(stock, i);
 		free (stock);
 		stock = tmp;
-		ft_putstr("stock apres free + tmp : ");
-		ft_putstr(stock);
-		ft_putstr("\n");
 	}
-	ft_putstr("buf : ");
-	ft_putstr(buf);
-	ft_putstr("\n");
 	stock = ft_strjoin(stock, buf);
-	ft_putstr("stock apres free + join : ");
-	ft_putstr(stock);
-	ft_putstr("\n");
 	return (1);
 }
 

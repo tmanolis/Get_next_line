@@ -40,7 +40,7 @@ char	*ft_strchr(const char *s, int c)
 		return (0);
 }
 
-char *ft_strjoin(char const *s1, char const *s2)
+char 	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	i;
 	size_t	j;
@@ -64,15 +64,4 @@ char *ft_strjoin(char const *s1, char const *s2)
 	}
 	new_str[j] = '\0';
 	return (new_str);
-}
-
-void ft_putstr(char *s)
-{
-    if (s)
-    {
-    size_t  len;
-
-    len = ft_strlen(s);
-    write(1, s, len);
-    }
 }
