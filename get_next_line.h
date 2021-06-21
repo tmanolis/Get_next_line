@@ -6,7 +6,7 @@
 /*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 11:19:11 by tmanolis          #+#    #+#             */
-/*   Updated: 2021/06/08 12:56:05 by tmanolis         ###   ########.fr       */
+/*   Updated: 2021/06/21 11:20:15 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <fcntl.h>
 
 #ifndef BUFFER_SIZE
-#define BUFFER_SIZE 1
+#define BUFFER_SIZE 9999
 #endif
 
 int get_next_line(int fd, char **line);
