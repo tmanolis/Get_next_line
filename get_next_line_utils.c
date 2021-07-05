@@ -6,7 +6,7 @@
 /*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 17:25:08 by tmanolis          #+#    #+#             */
-/*   Updated: 2021/06/10 17:49:09 by tmanolis         ###   ########.fr       */
+/*   Updated: 2021/07/05 18:19:27 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 #include <stddef.h>
 
 #include <unistd.h>
+#include <stdio.h>
 
 size_t  ft_strlen(const char *str)
 {
         int i;
 
+		if (!str)
+			return (0);
         i = 0;
         while (str[i] != '\0')
                 i++;
@@ -26,7 +29,7 @@ size_t  ft_strlen(const char *str)
         return (i);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(char *s, int c)
 {
 	while (*s)
 	{
@@ -40,7 +43,25 @@ char	*ft_strchr(const char *s, int c)
 		return (0);
 }
 
-char 	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strdup(const char *s1)
+{
+	int		i;
+	char	*dst;
+
+	i = 0;
+	dst = malloc(sizeof(char) * (ft_strlen(s1) + 1));
+	if (!dst)
+		return (NULL);
+	while(s1[i] != '\0')
+	{
+		dst[i] = s1[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (dst);
+}
+
+char 	*ft_strjoin(char *s1, char *s2)
 {
 	size_t	i;
 	size_t	j;
@@ -48,8 +69,8 @@ char 	*ft_strjoin(char const *s1, char const *s2)
 
 	i = 0;
 	j = 0;
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
+	if (s1 == NULL)
+		return (ft_strdup(s2));
 	new_str = (char	*)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1);
   	if (!new_str)
 		return (NULL);
@@ -63,5 +84,6 @@ char 	*ft_strjoin(char const *s1, char const *s2)
 		new_str[j++] = s2[i++];
 	}
 	new_str[j] = '\0';
+	free(s1);
 	return (new_str);
 }

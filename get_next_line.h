@@ -6,7 +6,7 @@
 /*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 11:19:11 by tmanolis          #+#    #+#             */
-/*   Updated: 2021/06/21 11:20:15 by tmanolis         ###   ########.fr       */
+/*   Updated: 2021/07/05 18:41:49 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,15 @@
 #include <sys/uio.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <stdlib.h>
 
 #ifndef BUFFER_SIZE
-#define BUFFER_SIZE 9999
+#define BUFFER_SIZE 42
 #endif
 
-int get_next_line(int fd, char **line);
+int		get_next_line(int fd, char **line);
+char 	*ft_strjoin(char *s1, char *s2);
+char	*ft_strchr(char *s, int c);
+size_t  ft_strlen(const char *str);
 
 #endif

@@ -5,46 +5,31 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/07 11:17:55 by tmanolis          #+#    #+#             */
-/*   Updated: 2021/06/10 18:25:43 by tmanolis         ###   ########.fr       */
+/*   Created: 2021/07/05 14:33:02 by tmanolis          #+#    #+#             */
+/*   Updated: 2021/07/05 18:50:39 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include "get_next_line.h"
+#include <stdio.h>
 
-size_t  ft_strlen(const char *str);
-char	*ft_strchr(const char *s, int c);
-char 	*ft_strjoin(char const *s1, char const *s2);
-
-char	*initialize_stock(char *stock)
+static char	*copy_until_EOL(char *stock)
 {
 	int i;
+	int len;
+	char *line;
 
-	stock = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
-	if (!stock)
-		return (NULL);
 	i = 0;
-	while (i < BUFFER_SIZE)
+	while (stock[i] != '\n' && stock[i] != '\0')
 	{
-		stock[i] = '\0';
 		i++;
 	}
-	return (stock);
-}
-
-char	*copy_until_EOF(char *line, char *stock, size_t i)
-{
-	size_t	len;
-	
-	line = (char *)malloc(sizeof(char) * (i + 1));
-		if (!line)
-			return (NULL);
+	len = i;
+	line = (char *)malloc(sizeof(char) * (len + 1));
+	if (!line)
+		return (NULL);
 	i = 0;
-	len = ft_strlen(stock); // to handle the last line of the file
-	while (stock[i] != '\n' && i < len)
+	while (i < len)
 	{
 		line[i] = stock[i];
 		i++;
@@ -52,96 +37,59 @@ char	*copy_until_EOF(char *line, char *stock, size_t i)
 	line[i] = '\0';
 	return (line);
 }
-char	*copy_rest(char	*stock, size_t i)
-{
-	size_t	j;
-	size_t	len;
-	char	*tmp;
 
-	len = ft_strlen(stock) - i;
-	tmp = (char *)malloc(sizeof(char) * len);
-	if (!tmp)
-		return (NULL);
+static void	get_the_spare(char *buf)
+{
+	int		i;
+	int		j;
+
+	i = 0;
 	j = 0;
+	while (buf[i] != '\n')
+		i++;
 	i = i + 1;
-	while (i < ft_strlen(stock))
+	while (i < BUFFER_SIZE)
 	{
-		tmp[j] = stock[i];
+		buf[j] = buf[i];
 		j++;
 		i++;
 	}
-	tmp[j] = '\0';
-	return (tmp);
-}
-
-size_t	len_of_line(size_t ret, char *stock)
-{
-	size_t i;
-
-	i = 0;
-	if (ret == 0 && ft_strchr(stock, '\n') == 0) // 2nd condition to deal with the last line
-		i = ft_strlen(stock);
-	else 
-	{
-		while (stock[i] != '\n')
-			i++;
-	}
-	return (i);
+	buf[j] = '\0';
 }
 
 int get_next_line(int fd, char **line)
 {
-	size_t		i;
-	size_t		ret;
-	char    	buf[BUFFER_SIZE + 1];
-	char		*tmp;
-	static char	*stock;
+	size_t		    ret;
+	static char    	buf[BUFFER_SIZE + 1];
+	char			*stock;
 
-	ret = read(fd, buf, BUFFER_SIZE);
-	buf[ret] = '\0';
-	if (stock == NULL)
-		stock = initialize_stock(stock);
+	if (!line || BUFFER_SIZE < 0 || read(fd, buf, 0) == -1 )
+		return (-1);
+	stock = NULL;
+	stock = ft_strjoin(stock, buf);
+	ret = 1;
 	while (ret > 0 && ft_strchr(stock, '\n') == 0)
 	{
-		stock = ft_strjoin(stock, buf);
-		if (ret != 0)
+		ret = read(fd, buf, BUFFER_SIZE);
+		if (ret < 0)
 		{
-			ret = read(fd, buf, BUFFER_SIZE);
-			buf[ret] = '\0';
+			free(stock);
+			return (-1);
 		}
+		buf[ret] = '\0';
+		stock = ft_strjoin(stock, buf);
 	}
-	i = len_of_line(ret, stock);
-	*line = copy_until_EOF(*line, stock, i);
-	tmp = NULL;
-	if (i < ft_strlen(stock))
+	if (ret > 0)
 	{
-		tmp = copy_rest(stock, i);
-		free (stock);
-		stock = tmp;
+		*line = copy_until_EOL(stock);
+		free(stock);
+		get_the_spare(buf);
+		return (1);
 	}
-	stock = ft_strjoin(stock, buf);
-	return (1);
-}
-
-int main(void)
-{
-	int		fd;
-	char	*line;
-
-	line = NULL;
-	fd = open("test.txt", O_RDONLY);
-	get_next_line(fd, &line);
-	printf("|%s|\n", line);
-	free(line);
-	get_next_line(fd, &line);
-	printf("|%s|\n", line);
-	free(line);
-	get_next_line(fd, &line);
-	printf("|%s|\n", line);
-	free(line);
-	get_next_line(fd, &line);
-	printf("|%s|\n", line);
-	free(line);
-	close (fd);
-	return (0);
+	else
+	{
+		*line = copy_until_EOL(stock);
+		free(stock);
+		return (0);
+	}
 }
