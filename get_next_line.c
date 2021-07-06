@@ -6,18 +6,17 @@
 /*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 14:33:02 by tmanolis          #+#    #+#             */
-/*   Updated: 2021/07/05 18:50:39 by tmanolis         ###   ########.fr       */
+/*   Updated: 2021/07/06 14:47:51 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 static char	*copy_until_EOL(char *stock)
 {
-	int i;
-	int len;
-	char *line;
+	int		i;
+	int		len;
+	char	*line;
 
 	i = 0;
 	while (stock[i] != '\n' && stock[i] != '\0')
@@ -57,13 +56,13 @@ static void	get_the_spare(char *buf)
 	buf[j] = '\0';
 }
 
-int get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
-	size_t		    ret;
-	static char    	buf[BUFFER_SIZE + 1];
-	char			*stock;
+	size_t		ret;
+	static char	buf[BUFFER_SIZE + 1];
+	char		*stock;
 
-	if (!line || BUFFER_SIZE < 0 || read(fd, buf, 0) == -1 )
+	if (!line || BUFFER_SIZE <= 0 || read(fd, buf, 0) == -1 )
 		return (-1);
 	stock = NULL;
 	stock = ft_strjoin(stock, buf);

@@ -6,27 +6,23 @@
 /*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 17:25:08 by tmanolis          #+#    #+#             */
-/*   Updated: 2021/07/05 18:19:27 by tmanolis         ###   ########.fr       */
+/*   Updated: 2021/07/06 14:53:17 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "get_next_line.h"
 #include <stddef.h>
 
-#include <unistd.h>
-#include <stdio.h>
-
-size_t  ft_strlen(const char *str)
+size_t	ft_strlen(const char *str)
 {
-        int i;
+	int	i;
 
-		if (!str)
-			return (0);
-        i = 0;
-        while (str[i] != '\0')
-                i++;
-
-        return (i);
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
 }
 
 char	*ft_strchr(char *s, int c)
@@ -52,7 +48,7 @@ char	*ft_strdup(const char *s1)
 	dst = malloc(sizeof(char) * (ft_strlen(s1) + 1));
 	if (!dst)
 		return (NULL);
-	while(s1[i] != '\0')
+	while (s1[i] != '\0')
 	{
 		dst[i] = s1[i];
 		i++;
@@ -61,7 +57,7 @@ char	*ft_strdup(const char *s1)
 	return (dst);
 }
 
-char 	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	size_t	i;
 	size_t	j;
@@ -71,8 +67,9 @@ char 	*ft_strjoin(char *s1, char *s2)
 	j = 0;
 	if (s1 == NULL)
 		return (ft_strdup(s2));
-	new_str = (char	*)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1);
-  	if (!new_str)
+	new_str = (char *)malloc(sizeof(char)
+			* (ft_strlen(s1) + ft_strlen(s2)) + 1);
+	if (!new_str)
 		return (NULL);
 	while (s1[i])
 	{
