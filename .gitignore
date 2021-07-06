@@ -51,9 +51,12 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-#Directory
+# Directory
 Subject
 gnlTester
 42TESTERS-GNL
 GNL_lover
 gnl-war-machine-v2019
+
+# Texte
+*.txt
