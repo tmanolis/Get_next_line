@@ -6,7 +6,7 @@
 /*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 14:33:02 by tmanolis          #+#    #+#             */
-/*   Updated: 2021/07/06 14:47:51 by tmanolis         ###   ########.fr       */
+/*   Updated: 2021/07/06 16:30:48 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,23 @@ static void	get_the_spare(char *buf)
 	buf[j] = '\0';
 }
 
+int	get_next_line_2(size_t ret, char *stock, char *buf, char **line)
+{
+	if (ret > 0)
+	{
+		*line = copy_until_EOL(stock);
+		free(stock);
+		get_the_spare(buf);
+		return (1);
+	}
+	else
+	{
+		*line = copy_until_EOL(stock);
+		free(stock);
+		return (0);
+	}
+}
+
 int	get_next_line(int fd, char **line)
 {
 	size_t		ret;
@@ -78,17 +95,5 @@ int	get_next_line(int fd, char **line)
 		buf[ret] = '\0';
 		stock = ft_strjoin(stock, buf);
 	}
-	if (ret > 0)
-	{
-		*line = copy_until_EOL(stock);
-		free(stock);
-		get_the_spare(buf);
-		return (1);
-	}
-	else
-	{
-		*line = copy_until_EOL(stock);
-		free(stock);
-		return (0);
-	}
+	return (get_next_line_2(ret, stock, buf, line));
 }
