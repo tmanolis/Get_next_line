@@ -6,11 +6,9 @@
 /*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:51:30 by tmanolis          #+#    #+#             */
-/*   Updated: 2021/07/06 18:00:56 by tmanolis         ###   ########.fr       */
+/*   Updated: 2021/07/06 18:04:44 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "get_next_line_bonus.h"
 
