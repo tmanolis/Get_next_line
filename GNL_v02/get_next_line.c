@@ -6,13 +6,13 @@
 /*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 14:33:02 by tmanolis          #+#    #+#             */
-/*   Updated: 2021/07/07 16:41:03 by tmanolis         ###   ########.fr       */
+/*   Updated: 2021/07/07 18:39:10 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*copy_until_EOL(char *stock)
+char	*copy_until_EOL(char *stock)
 {
 	int		i;
 	int		len;
@@ -24,7 +24,7 @@ static char	*copy_until_EOL(char *stock)
 		i++;
 	}
 	len = i;
-	line = (char *)malloc(sizeof(char) * (len + 1));
+	line = (char *)malloc(sizeof(char) * (len + 2));
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -33,11 +33,12 @@ static char	*copy_until_EOL(char *stock)
 		line[i] = stock[i];
 		i++;
 	}
-	line[i] = '\0';
+	line[i] = '\n';
+	line[i + 1] = '\0';
 	return (line);
 }
 
-static void	get_the_spare(char *buf)
+void	get_the_spare(char *buf)
 {
 	int		i;
 	int		j;
@@ -56,31 +57,32 @@ static void	get_the_spare(char *buf)
 	buf[j] = '\0';
 }
 
-int	get_next_line_2(size_t ret, char *stock, char *buf, char **line)
+char	*get_next_line_2(size_t ret, char *stock, char *buf)
 {
+	char	*line;
+
 	if (ret > 0)
 	{
-		*line = copy_until_EOL(stock);
+		line = copy_until_EOL(stock);
 		free(stock);
 		get_the_spare(buf);
-		return (1);
 	}
 	else
 	{
-		*line = copy_until_EOL(stock);
+		line = copy_until_EOL(stock);
 		free(stock);
-		return (0);
 	}
+	return (line);
 }
 
-int	get_next_line(int fd, char **line)
+char	*get_next_line(int fd)
 {
 	size_t		ret;
-	static char	buf[BUFFER_SIZE + 1];
 	char		*stock;
+	static char	buf[BUFFER_SIZE + 1];
 
-	if (!line || BUFFER_SIZE <= 0 || read(fd, buf, 0) == -1 )
-		return (-1);
+	if (BUFFER_SIZE <= 0 || read(fd, buf, 0) == -1)
+		return (NULL);
 	stock = NULL;
 	stock = ft_strjoin(stock, buf);
 	ret = 1;
@@ -90,10 +92,15 @@ int	get_next_line(int fd, char **line)
 		if (ret < 0)
 		{
 			free(stock);
-			return (-1);
+			return (NULL);
 		}
 		buf[ret] = '\0';
 		stock = ft_strjoin(stock, buf);
 	}
-	return (get_next_line_2(ret, stock, buf, line));
+	if (ft_strlen(stock) == 0)
+	{
+		free(stock);
+		return (NULL);
+	}
+	return (get_next_line_2(ret, stock, buf));
 }

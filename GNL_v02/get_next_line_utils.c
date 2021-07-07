@@ -6,12 +6,11 @@
 /*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 17:25:08 by tmanolis          #+#    #+#             */
-/*   Updated: 2021/07/06 14:53:17 by tmanolis         ###   ########.fr       */
+/*   Updated: 2021/07/07 17:17:13 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stddef.h>
 
 size_t	ft_strlen(const char *str)
 {
