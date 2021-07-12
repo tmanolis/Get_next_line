@@ -6,7 +6,7 @@
 /*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 14:33:02 by tmanolis          #+#    #+#             */
-/*   Updated: 2021/07/07 18:39:10 by tmanolis         ###   ########.fr       */
+/*   Updated: 2021/07/09 15:00:53 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ char	*copy_until_EOL(char *stock)
 	{
 		i++;
 	}
-	len = i;
-	line = (char *)malloc(sizeof(char) * (len + 2));
+	len = i + 1;
+	line = (char *)malloc(sizeof(char) * (i + 1));
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -33,8 +33,7 @@ char	*copy_until_EOL(char *stock)
 		line[i] = stock[i];
 		i++;
 	}
-	line[i] = '\n';
-	line[i + 1] = '\0';
+	line[i] = '\0';
 	return (line);
 }
 
@@ -61,6 +60,12 @@ char	*get_next_line_2(size_t ret, char *stock, char *buf)
 {
 	char	*line;
 
+	line = NULL;
+	if (*stock == '\0')
+	{
+		free(stock);
+		return (NULL);
+	}
 	if (ret > 0)
 	{
 		line = copy_until_EOL(stock);
@@ -96,11 +101,6 @@ char	*get_next_line(int fd)
 		}
 		buf[ret] = '\0';
 		stock = ft_strjoin(stock, buf);
-	}
-	if (ft_strlen(stock) == 0)
-	{
-		free(stock);
-		return (NULL);
 	}
 	return (get_next_line_2(ret, stock, buf));
 }
