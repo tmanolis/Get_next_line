@@ -21,7 +21,7 @@ int main(void)
 	line = get_next_line(fd);
 	printf(">>> line : |%s| <<<\n", line);
 	free(line);
-	atexit(f);
+	// atexit(f);
 	close (fd);
 	return (0);
 }

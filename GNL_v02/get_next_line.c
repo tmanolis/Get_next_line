@@ -6,13 +6,13 @@
 /*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 14:33:02 by tmanolis          #+#    #+#             */
-/*   Updated: 2021/07/09 15:00:53 by tmanolis         ###   ########.fr       */
+/*   Updated: 2021/12/03 16:17:44 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*copy_until_EOL(char *stock)
+char	*copy_until_eol(char *stock)
 {
 	int		i;
 	int		len;
@@ -23,8 +23,10 @@ char	*copy_until_EOL(char *stock)
 	{
 		i++;
 	}
-	len = i + 1;
-	line = (char *)malloc(sizeof(char) * (i + 1));
+	if (stock[i] == '\n')
+		i++;
+	len = i;
+	line = (char *)malloc(sizeof(char) * (len + 1));
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -68,13 +70,13 @@ char	*get_next_line_2(size_t ret, char *stock, char *buf)
 	}
 	if (ret > 0)
 	{
-		line = copy_until_EOL(stock);
+		line = copy_until_eol(stock);
 		free(stock);
 		get_the_spare(buf);
 	}
 	else
 	{
-		line = copy_until_EOL(stock);
+		line = copy_until_eol(stock);
 		free(stock);
 	}
 	return (line);

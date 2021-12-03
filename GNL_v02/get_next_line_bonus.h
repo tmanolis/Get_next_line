@@ -6,12 +6,12 @@
 /*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:52:05 by tmanolis          #+#    #+#             */
-/*   Updated: 2021/07/07 17:41:10 by tmanolis         ###   ########.fr       */
+/*   Updated: 2021/12/03 16:18:07 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_BONUS_H
-# define	GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include <sys/types.h>
 # include <sys/uio.h>
@@ -21,7 +21,7 @@
 # include <stddef.h>
 
 # ifndef BUFFER_SIZE
-#  define	BUFFER_SIZE 42
+#  define BUFFER_SIZE 42
 # endif
 
 char	*get_next_line(int fd);

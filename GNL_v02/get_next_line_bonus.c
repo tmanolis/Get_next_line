@@ -6,13 +6,13 @@
 /*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:51:30 by tmanolis          #+#    #+#             */
-/*   Updated: 2021/07/09 15:09:13 by tmanolis         ###   ########.fr       */
+/*   Updated: 2021/12/03 16:18:53 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-char	*copy_until_EOL(char *stock)
+char	*copy_until_eol(char *stock)
 {
 	int		i;
 	int		len;
@@ -68,13 +68,13 @@ char	*get_next_line_2(size_t ret, char *stock, char *buf)
 	}
 	if (ret > 0)
 	{
-		line = copy_until_EOL(stock);
+		line = copy_until_eol(stock);
 		free(stock);
 		get_the_spare(buf);
 	}
 	else
 	{
-		line = copy_until_EOL(stock);
+		line = copy_until_eol(stock);
 		free(stock);
 	}
 	return (line);
